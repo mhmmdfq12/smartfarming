@@ -1,0 +1,16 @@
+<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+<script>
+const client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt');
+client.on('connect', () => {
+  client.subscribe('farm/sensor/#');
+});
+
+client.on('message', (topic, message) => {
+  const data = JSON.parse(message.toString());
+  document.getElementById('temp').innerText = data.temp;
+  document.getElementById('soil1').innerText = data.soil1;
+});
+</script>
+
+<h3>Suhu: <span id="temp">0</span> °C</h3>
+<h3>Soil 1: <span id="soil1">0</span> %</h3>
